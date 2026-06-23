@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OpsBrain — Industrial Knowledge Intelligence</title>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">◆</div>
+      <div>
+        <h1>OpsBrain</h1>
+        <p>Industrial Knowledge Intelligence — Operations Brain for the plant floor</p>
+      </div>
+    </div>
+    <div class="status" id="status">connecting…</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="ask">💬 Ask OpsBrain</button>
+    <button class="tab" data-tab="compliance">🛡 Compliance Audit</button>
+    <button class="tab" data-tab="graph">🕸 Knowledge Graph</button>
+    <button class="tab" data-tab="docs">📁 Documents</button>
+  </nav>
+
+  <main>
+    <!-- ASK -->
+    <section class="panel active" id="ask">
+      <div class="chips" id="suggestions">
+        <span class="chip">What failed on pump P-204 last year?</span>
+        <span class="chip">How do I replace the mechanical seal on P-204 safely?</span>
+        <span class="chip">What is the vibration trip limit and why did it trend up?</span>
+        <span class="chip">How do I isolate P-204 for maintenance?</span>
+      </div>
+      <div class="chat" id="chat"></div>
+      <form class="composer" id="askForm">
+        <input id="q" placeholder="Ask about equipment, failures, procedures, standards…" autocomplete="off" />
+        <button type="submit">Ask</button>
+      </form>
+    </section>
+
+    <!-- COMPLIANCE -->
+    <section class="panel" id="compliance">
+      <form class="composer wide" id="compForm">
+        <input id="topic" placeholder="Audit topic or equipment tag, e.g. 'P-204 mechanical seal' " autocomplete="off" />
+        <button type="submit">Run audit</button>
+      </form>
+      <div id="compResult" class="comp-result"></div>
+    </section>
+
+    <!-- GRAPH -->
+    <section class="panel" id="graph">
+      <div class="graph-bar">
+        <button id="buildGraph">Build knowledge graph</button>
+        <span id="graphEngine" class="muted"></span>
+      </div>
+      <div id="network"></div>
+    </section>
+
+    <!-- DOCS -->
+    <section class="panel" id="docs">
+      <div class="upload">
+        <input type="file" id="file" accept=".pdf,.txt,.md" />
+        <button id="uploadBtn">Upload &amp; index</button>
+        <button id="reindexBtn" class="ghost">Reindex sample corpus</button>
+      </div>
+      <div id="docList" class="doc-list"></div>
+    </section>
+  </main>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
