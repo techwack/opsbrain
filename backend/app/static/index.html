@@ -4,74 +4,125 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>OpsBrain — Industrial Knowledge Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
 <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
-<link rel="stylesheet" href="/static/app.css" />
+<link rel="stylesheet" href="/static/app.css?v=3" />
 </head>
 <body>
-<div class="app">
-  <header class="topbar">
+<div class="shell">
+  <!-- ───────────── Sidebar ───────────── -->
+  <aside class="sidebar">
     <div class="brand">
       <div class="logo">◆</div>
-      <div>
-        <h1>OpsBrain</h1>
-        <p>Industrial Knowledge Intelligence — Operations Brain for the plant floor</p>
+      <div class="brand-txt">
+        <strong>OpsBrain</strong>
+        <small>Industrial Knowledge Intelligence</small>
       </div>
     </div>
-    <div class="status" id="status">connecting…</div>
-  </header>
 
-  <nav class="tabs">
-    <button class="tab active" data-tab="ask">💬 Ask OpsBrain</button>
-    <button class="tab" data-tab="compliance">🛡 Compliance Audit</button>
-    <button class="tab" data-tab="graph">🕸 Knowledge Graph</button>
-    <button class="tab" data-tab="docs">📁 Documents</button>
-  </nav>
+    <nav class="nav">
+      <button class="nav-item active" data-tab="ask">
+        <span class="ic">💬</span><span>Ask OpsBrain</span>
+      </button>
+      <button class="nav-item" data-tab="compliance">
+        <span class="ic">🛡</span><span>Compliance Audit</span>
+      </button>
+      <button class="nav-item" data-tab="graph">
+        <span class="ic">🕸</span><span>Knowledge Graph</span>
+      </button>
+      <button class="nav-item" data-tab="docs">
+        <span class="ic">📁</span><span>Documents</span>
+      </button>
+    </nav>
 
-  <main>
+    <div class="side-foot">
+      <div class="metric"><span id="mDocs">—</span><small>documents</small></div>
+      <div class="metric"><span id="mChunks">—</span><small>indexed chunks</small></div>
+      <div class="env" id="env">connecting…</div>
+    </div>
+  </aside>
+
+  <!-- ───────────── Main ───────────── -->
+  <main class="main">
+    <header class="page-head">
+      <div>
+        <h2 id="pageTitle">Ask OpsBrain</h2>
+        <p id="pageSub">Grounded answers from your plant's manuals, work orders &amp; standards — with citations.</p>
+      </div>
+      <div class="status" id="status"><i></i><span>connecting…</span></div>
+    </header>
+
     <!-- ASK -->
     <section class="panel active" id="ask">
-      <div class="chips" id="suggestions">
-        <span class="chip">What failed on pump P-204 last year?</span>
-        <span class="chip">How do I replace the mechanical seal on P-204 safely?</span>
-        <span class="chip">What is the vibration trip limit and why did it trend up?</span>
-        <span class="chip">How do I isolate P-204 for maintenance?</span>
+      <div class="chat" id="chat">
+        <div class="welcome">
+          <div class="welcome-logo">◆</div>
+          <h3>Your plant's operations brain</h3>
+          <p>Ask about equipment, failure history, procedures or compliance. Every answer is grounded in your documents and cited.</p>
+          <div class="chips" id="suggestions">
+            <button class="chip">What failed on pump P-204 last year?</button>
+            <button class="chip">How do I replace the mechanical seal on P-204 safely?</button>
+            <button class="chip">What's the vibration trip limit and why did it trend up?</button>
+            <button class="chip">How do I isolate P-204 for maintenance?</button>
+          </div>
+        </div>
       </div>
-      <div class="chat" id="chat"></div>
       <form class="composer" id="askForm">
         <input id="q" placeholder="Ask about equipment, failures, procedures, standards…" autocomplete="off" />
-        <button type="submit">Ask</button>
+        <button type="submit" aria-label="Send">↑</button>
       </form>
     </section>
 
     <!-- COMPLIANCE -->
     <section class="panel" id="compliance">
       <form class="composer wide" id="compForm">
-        <input id="topic" placeholder="Audit topic or equipment tag, e.g. 'P-204 mechanical seal' " autocomplete="off" />
+        <input id="topic" placeholder="Audit topic or equipment tag — e.g. 'P-204 mechanical seal'" autocomplete="off" />
         <button type="submit">Run audit</button>
       </form>
-      <div id="compResult" class="comp-result"></div>
+      <div id="compResult" class="comp-result">
+        <div class="empty">
+          <div class="empty-ic">🛡</div>
+          <p>Enter an equipment tag or topic to audit it against OISD &amp; Factory Act standards.</p>
+        </div>
+      </div>
     </section>
 
     <!-- GRAPH -->
     <section class="panel" id="graph">
       <div class="graph-bar">
-        <button id="buildGraph">Build knowledge graph</button>
+        <button id="buildGraph">⚡ Build knowledge graph</button>
         <span id="graphEngine" class="muted"></span>
       </div>
       <div id="network"></div>
+      <div class="legend">
+        <span><i style="background:#3b82f6"></i>Equipment</span>
+        <span><i style="background:#10b981"></i>System</span>
+        <span><i style="background:#ef4444"></i>Failure</span>
+        <span><i style="background:#f59e0b"></i>Standard</span>
+        <span><i style="background:#a78bfa"></i>Location</span>
+      </div>
     </section>
 
     <!-- DOCS -->
     <section class="panel" id="docs">
       <div class="upload">
-        <input type="file" id="file" accept=".pdf,.txt,.md" />
-        <button id="uploadBtn">Upload &amp; index</button>
-        <button id="reindexBtn" class="ghost">Reindex sample corpus</button>
+        <label class="file-drop" id="drop">
+          <input type="file" id="file" accept=".pdf,.txt,.md" hidden />
+          <span class="file-ic">⬆</span>
+          <span id="fileLabel">Drop a PDF / TXT / MD here, or click to choose</span>
+        </label>
+        <div class="upload-actions">
+          <button id="uploadBtn">Upload &amp; index</button>
+          <button id="reindexBtn" class="ghost">Reindex corpus</button>
+        </div>
       </div>
+      <h4 class="section-label">Indexed corpus</h4>
       <div id="docList" class="doc-list"></div>
     </section>
   </main>
 </div>
-<script src="/static/app.js"></script>
+<script src="/static/app.js?v=3"></script>
 </body>
 </html>

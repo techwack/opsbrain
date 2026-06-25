@@ -65,11 +65,16 @@ def answer(question: str, top_k: int = 6) -> dict:
             f"Technician question: {question}\n\n"
             "Answer with inline [S#] citations.",
         )
-    except llm.LLMUnavailable as e:
-        text = (
-            f"*(LLM answer disabled: {e})*\n\nMost relevant excerpts were still "
-            "retrieved — see sources below."
+    except llm.LLMUnavailable:
+        # Extractive fallback: still useful & cited, no API key required.
+        top = hits[:3]
+        bullets = "\n\n".join(
+            f"**[S{i}]** {h['text'][:360].strip()}…" for i, h in enumerate(top, start=1)
         )
-        confidence = round(confidence * 0.7, 2)
+        text = (
+            "Based on the most relevant passages in your documents "
+            "(set `ANTHROPIC_API_KEY` for synthesized answers):\n\n" + bullets
+        )
+        confidence = round(confidence * 0.8, 2)
 
     return {"answer": text, "sources": sources, "confidence": confidence}

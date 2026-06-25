@@ -10,7 +10,7 @@ env/
 backend/.env
 
 # Data / vector store (regenerated on first run)
-backend/data/chroma/
+backend/data/store.json
 *.sqlite3
 
 # OS / editor

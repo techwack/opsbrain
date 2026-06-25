@@ -48,6 +48,8 @@ def _chunk(text: str) -> list[str]:
                     chunk = chunk[: cut + len(sep)]
                     break
         chunks.append(chunk.strip())
+        if start + len(chunk) >= len(text):
+            break  # consumed the remainder — stop (avoids tiny tail chunks)
         start += max(1, len(chunk) - CHUNK_OVERLAP)
     return [c for c in chunks if c]
 

@@ -13,11 +13,11 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.getenv("OPSBRAIN_DATA_DIR", BASE_DIR / "data")).resolve()
 DOCS_DIR = DATA_DIR / "docs"
-CHROMA_DIR = DATA_DIR / "chroma"
+STORE_PATH = DATA_DIR / "store.json"
 STATIC_DIR = (BASE_DIR / "app" / "static").resolve()
 
 DOCS_DIR.mkdir(parents=True, exist_ok=True)
-CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
 MODEL = os.getenv("OPSBRAIN_MODEL", "claude-opus-4-8")
@@ -26,6 +26,5 @@ MODEL = os.getenv("OPSBRAIN_MODEL", "claude-opus-4-8")
 CHUNK_SIZE = 1100          # characters per chunk
 CHUNK_OVERLAP = 180        # character overlap between chunks
 TOP_K = 6                  # chunks retrieved per query
-COLLECTION_NAME = "opsbrain_docs"
 
 LLM_ENABLED = bool(ANTHROPIC_API_KEY)

@@ -32,23 +32,28 @@ It does three things no plain document-search tool does:
                                       │               │               │
                        ┌──────────────▼───┐  ┌────────▼────────┐  ┌───▼──────────────┐
                        │  RAG retrieval    │  │  Agents          │  │  Ingestion        │
-                       │  ChromaDB +       │  │  QA / Compliance  │  │  pypdf → chunk →  │
-                       │  ONNX MiniLM emb. │  │  / KG (Claude)    │  │  embed → index    │
+                       │  TF-IDF + cosine  │  │  QA / Compliance  │  │  pypdf → chunk →  │
+                       │  (pluggable)      │  │  / KG (Claude)    │  │  vectorize → index│
                        └───────────────────┘  └─────────┬────────┘  └──────────────────┘
                                                          │
                                                    Anthropic Claude API
 ```
 
-- **Retrieval works with no API key** (ChromaDB ships a self-contained embedding model).
+- **Retrieval works with no API key** — a pure-Python TF-IDF + cosine vector store
+  (scikit-learn) that installs on any machine with no native build toolchain. The store
+  interface mirrors a vector DB, so it can be swapped for embeddings (e.g. sentence
+  transformers / a managed vector DB) without touching the agents.
 - **Answer generation** uses the Claude API when `ANTHROPIC_API_KEY` is set; otherwise the
   app degrades gracefully and still returns the retrieved evidence.
+- The web UI also has an offline **demo mode**: if the backend isn't reachable it serves
+  representative answers so the product is always presentable.
 
 ## Tech stack
 
 | Layer        | Choice                                             |
 |--------------|----------------------------------------------------|
 | Backend      | Python · FastAPI · Uvicorn                          |
-| Retrieval    | ChromaDB (persistent) · ONNX MiniLM embeddings      |
+| Retrieval    | scikit-learn TF-IDF + cosine (pluggable vector store)|
 | Reasoning    | Anthropic Claude (`claude-opus-4-8`)                |
 | Graph        | NetworkX (centrality) + vis-network (render)        |
 | Ingestion    | pypdf, overlapping sentence-aware chunking          |
