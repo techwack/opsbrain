@@ -27,3 +27,6 @@ docs/OpsBrain_Deck.pdf
 Thumbs.db
 .idea/
 .vscode/
+
+# Tooling config (not part of the project)
+.claude/
