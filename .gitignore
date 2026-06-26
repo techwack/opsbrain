@@ -13,6 +13,15 @@ backend/.env
 backend/data/store.json
 *.sqlite3
 
+# Node (doc tooling)
+node_modules/
+tools/package-lock.json
+
+# Doc build temp artifacts
+docs/qa_*.png
+docs/slide_*.png
+docs/OpsBrain_Deck.pdf
+
 # OS / editor
 .DS_Store
 Thumbs.db

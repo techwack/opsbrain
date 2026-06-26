@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#10151f; --soft:#475067; --faint:#7c8699; --line:#e3e7ee;
+    --blue:#2f6fe0; --teal:#0d9b80; --bg:#fff; --panel:#f6f8fb;
+    --high:#d13b3b; --med:#c47d12;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:"Source Serif 4",Georgia,serif;color:var(--ink);font-size:10.6pt;line-height:1.55;}
+  h1,h2,h3,h4,.sans{font-family:"Inter",system-ui,sans-serif;}
+  @page{size:Letter;margin:0;}
+  .page{padding:52px 60px;}
+  .break{page-break-before:always;}
+  figure,.card,.decision,table,pre,.grid3,.two,svg{break-inside:avoid;}
+  h2,h3{break-after:avoid;}
+  p{margin:0 0 11px;}
+  a{color:var(--blue);text-decoration:none;}
+
+  /* cover */
+  .cover{background:#0b1018;color:#eef3fa;padding:72px 60px;border-radius:0;height:100vh;display:flex;flex-direction:column;justify-content:center;}
+  .cover .logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,#4f8cff,#14d3b0);
+    display:flex;align-items:center;justify-content:center;color:#03121f;font-size:26px;font-weight:800;}
+  .cover h1{font-size:40px;font-weight:800;letter-spacing:-.5px;margin:26px 0 6px;}
+  .cover .tag{font-family:"Inter";font-size:16px;color:#b9c6db;margin-bottom:30px;}
+  .cover .meta{font-family:"Inter";font-size:12.5px;color:#8da3c0;border-top:1px solid #26344a;padding-top:16px;}
+  .cover .meta b{color:#eef3fa;}
+
+  .eyebrow{font-family:"Inter";font-size:10pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin:0 0 6px;}
+  h2{font-family:"Inter";font-size:21pt;font-weight:700;letter-spacing:-.3px;margin:0 0 14px;line-height:1.12;}
+  h3{font-family:"Inter";font-size:13pt;font-weight:650;margin:22px 0 7px;}
+  .lead{font-size:12pt;color:var(--soft);line-height:1.5;}
+
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:14px 0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:15px 16px;}
+  .card h4{font-family:"Inter";font-size:11.5pt;font-weight:700;margin:0 0 5px;color:var(--ink);}
+  .card p{font-size:9.6pt;color:var(--soft);margin:0;line-height:1.42;}
+  .card .k{font-family:"Inter";font-size:26pt;font-weight:800;line-height:1;margin:0 0 8px;}
+
+  figure{margin:16px 0;}
+  figure img{width:100%;border:1px solid var(--line);border-radius:10px;display:block;}
+  figcaption{font-family:"Inter";font-size:9pt;color:var(--faint);margin-top:6px;}
+
+  .two{display:grid;grid-template-columns:1.05fr 1fr;gap:26px;align-items:start;}
+  ul.tight{margin:6px 0 11px;padding-left:18px;}
+  ul.tight li{margin-bottom:6px;}
+
+  table{width:100%;border-collapse:collapse;font-family:"Inter";font-size:9.8pt;margin:10px 0;}
+  table td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table tr td:first-child{font-weight:650;width:32%;color:var(--ink);}
+  table td:last-child{color:var(--soft);}
+
+  .decision{margin:0 0 13px;padding-left:14px;border-left:2px solid var(--teal);}
+  .decision b{font-family:"Inter";font-size:10.6pt;}
+  .decision p{margin:3px 0 0;color:var(--soft);font-size:10pt;}
+
+  code{font-family:"Consolas",monospace;font-size:9pt;background:var(--panel);padding:1px 5px;border-radius:4px;color:#0b3b8c;}
+  pre{background:#0b1018;color:#d6e2f2;font-family:"Consolas",monospace;font-size:9pt;line-height:1.5;
+    padding:14px 16px;border-radius:9px;overflow:hidden;margin:10px 0;}
+  .foot{font-family:"Inter";font-size:8.5pt;color:var(--faint);text-align:center;margin-top:30px;border-top:1px solid var(--line);padding-top:10px;}
+  .pill{display:inline-block;font-family:"Inter";font-size:8pt;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .pill.h{background:#fbe6e6;color:var(--high);}
+  .pill.m{background:#f7ecd6;color:var(--med);}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="logo">◆</div>
+  <h1>OpsBrain</h1>
+  <div class="tag">The operations brain for the plant floor.</div>
+  <p style="color:#c6d3e6;font-size:13.5px;max-width:560px;line-height:1.55;font-family:'Inter'">
+    Ask a plant's manuals, work orders and safety standards in plain language, and get a
+    cited answer back in seconds — plus a compliance check and a map of how the equipment
+    connects.</p>
+  <div class="meta" style="margin-top:34px;">
+    <b>ET AI Hackathon 2.0</b> &nbsp;·&nbsp; Phase 2 — Build Sprint<br/>
+    <b>Problem Statement 8</b> — Industrial Knowledge Intelligence<br/>
+    <span style="display:inline-block;margin-top:8px;">Divyanshi Jain &nbsp;·&nbsp; github.com/techwack/opsbrain</span>
+  </div>
+</div>
+
+<!-- 1. SUMMARY + PROBLEM -->
+<div class="page break">
+  <p class="eyebrow">In one paragraph</p>
+  <h2>What OpsBrain is</h2>
+  <p class="lead">OpsBrain is a copilot that sits on top of a plant's existing documents —
+  OEM manuals, P&amp;IDs, work-order history, OISD and Factory Act standards, incident
+  reports — and lets an engineer ask it anything. It answers in plain language, cites the
+  exact document and page it used, and tells you how confident it is. On top of that it does
+  two things a search box can't: it audits an asset against safety standards and flags the
+  gaps, and it draws the relationships between equipment, failure modes and the rules that
+  govern them.</p>
+
+  <h3>The problem I set out to solve</h3>
+  <p>I kept coming back to one line from the brief: the information almost always exists,
+  but nobody can find it in time. A single refinery or steel plant runs on tens of thousands
+  of pages, written over decades, sitting in binders, shared drives and a couple of
+  generations of software that don't talk to each other. When a pump trips on the night
+  shift, the maintenance history, the OEM procedure and the relevant safety clause are all
+  there somewhere. The engineer just can't get to them fast enough — so they rely on memory,
+  or on the one person who was around for the last failure.</p>
+  <p>That has three costs, and they compound:</p>
+
+  <div class="grid3">
+    <div class="card"><h4>Time lost</h4><p>Studies of process industries put roughly a third
+      of an engineer's day into hunting for information that already exists.</p></div>
+    <div class="card"><h4>Mistakes repeated</h4><p>The last work order on an asset is rarely
+      read before the next job, so the same failure comes back.</p></div>
+    <div class="card"><h4>Risk discovered late</h4><p>Compliance obligations live inside long
+      PDFs that nobody re-reads until after an incident forces it.</p></div>
+  </div>
+  <p>None of this is a modelling problem. It's a retrieval problem wearing a domain coat —
+  which is exactly what a grounded, cited LLM system is good at, if you build it carefully.</p>
+</div>
+
+<!-- 2. WHAT I BUILT -->
+<div class="page break">
+  <p class="eyebrow">What I built</p>
+  <h2>Three things, one corpus</h2>
+  <p class="lead">Everything below runs off the same indexed set of documents. Upload more
+  and all three features get smarter at once.</p>
+
+  <h3>1 — Ask, with citations you can check</h3>
+  <p>A technician types a question the way they'd say it out loud. OpsBrain retrieves the
+  most relevant passages, hands them to Claude with strict instructions to stay grounded,
+  and returns an answer where every claim is tagged back to a source. A confidence score
+  (built from retrieval similarity) tells the reader when to trust it and when to go read the
+  manual themselves. If anything implies a safety or compliance risk, the answer flags it.</p>
+  <figure>
+    <img src="assets/02_answer.png" />
+    <figcaption>Asking how to replace the seal on pump P-204. The steps, the torque spec and a
+    safety flag — each line cited back to the OEM manual, work-order history or the OISD standard.</figcaption>
+  </figure>
+</div>
+
+<div class="page break">
+  <h3 style="margin-top:0;">2 — A compliance check that runs before the auditor does</h3>
+  <p>Point it at an asset and OpsBrain pulls the operational record and the relevant standard,
+  then asks the model to find concrete deviations — not vague advice, but specific gaps tied
+  to a clause and ranked by severity, each with a recommended action.</p>
+  <figure>
+    <img src="assets/03_compliance.png" />
+    <figcaption>Auditing P-204's seal history surfaces a <span class="pill h">HIGH</span> missing
+    root-cause analysis after repeat failures, and a <span class="pill m">MEDIUM</span> isolation
+    gap on a valve with a passing history — both tied to OISD-STD-105 clauses.</figcaption>
+  </figure>
+</div>
+
+<div class="page break">
+  <h3 style="margin-top:0;">3 — The plant as a knowledge graph</h3>
+  <p>From the same documents, OpsBrain extracts equipment tags, failure modes, systems,
+  standards and locations, and draws the edges between them. It's how you see that one pump
+  sits at the centre of three failure modes and a safety standard — at a glance.</p>
+  <figure>
+    <img src="assets/04_graph.png" />
+    <figcaption>Equipment (blue), failure modes (red), systems (green) and the standards that
+    govern them (amber), extracted automatically and laid out by relationship.</figcaption>
+  </figure>
+</div>
+
+<!-- 3. HOW IT WORKS -->
+<div class="page break">
+  <p class="eyebrow">How it works</p>
+  <h2>The architecture</h2>
+  <p class="lead">One service serves the API and the UI. Retrieval runs with no external
+  dependencies; Claude does the reasoning. Nothing here needs a GPU or a cloud account to run.</p>
+
+  <figure>
+  <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:1px solid var(--line);border-radius:10px;background:#fbfcfe;">
+    <style>
+      .b{fill:#f6f8fb;stroke:#cdd6e4;stroke-width:1.2;rx:9;}
+      .t{font-family:Inter,sans-serif;font-weight:700;fill:#10151f;}
+      .s{font-family:Inter,sans-serif;fill:#5b6479;}
+      .ar{stroke:#0d9b80;stroke-width:1.6;marker-end:url(#a);}
+    </style>
+    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#0d9b80"/></marker></defs>
+    <rect class="b" x="40" y="24" width="640" height="54" rx="9"/>
+    <text class="t" x="60" y="46" font-size="13">Web UI</text>
+    <text class="s" x="60" y="64" font-size="11">Ask · Compliance Audit · Knowledge Graph · Documents — single page, no build step</text>
+    <line class="ar" x1="360" y1="78" x2="360" y2="104"/>
+    <rect class="b" x="40" y="106" width="640" height="50" rx="9"/>
+    <text class="t" x="60" y="128" font-size="13">FastAPI service</text>
+    <text class="s" x="60" y="145" font-size="11">/ask&#160;&#160;/compliance&#160;&#160;/graph&#160;&#160;/upload&#160;&#160;/reindex&#160;&#160;/health</text>
+    <line class="ar" x1="150" y1="156" x2="150" y2="190"/>
+    <line class="ar" x1="360" y1="156" x2="360" y2="190"/>
+    <line class="ar" x1="570" y1="156" x2="570" y2="190"/>
+    <rect class="b" x="40" y="192" width="220" height="78" rx="9"/>
+    <text class="t" x="58" y="216" font-size="12.5">Retrieval</text>
+    <text class="s" x="58" y="235" font-size="10.5">TF-IDF + cosine over chunked</text>
+    <text class="s" x="58" y="250" font-size="10.5">docs. Pure-Python, pluggable</text>
+    <text class="s" x="58" y="265" font-size="10.5">for embeddings.</text>
+    <rect class="b" x="270" y="192" width="180" height="78" rx="9"/>
+    <text class="t" x="288" y="216" font-size="12.5">Agents</text>
+    <text class="s" x="288" y="235" font-size="10.5">QA · Compliance · Graph.</text>
+    <text class="s" x="288" y="250" font-size="10.5">Grounded prompts, JSON</text>
+    <text class="s" x="288" y="265" font-size="10.5">structured output.</text>
+    <rect class="b" x="460" y="192" width="220" height="78" rx="9"/>
+    <text class="t" x="478" y="216" font-size="12.5">Ingestion</text>
+    <text class="s" x="478" y="235" font-size="10.5">pypdf → sentence-aware</text>
+    <text class="s" x="478" y="250" font-size="10.5">chunking → index.</text>
+    <line class="ar" x1="360" y1="270" x2="360" y2="306"/>
+    <rect x="250" y="308" width="220" height="40" rx="9" fill="#0b1018"/>
+    <text x="360" y="333" font-size="12" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" fill="#7fe6cf">Anthropic Claude — claude-opus-4-8</text>
+  </svg>
+  <figcaption>Retrieval and the knowledge graph run offline; the agents call Claude when a key
+  is present. With no key, answers fall back to cited extracts — the app is never a blank screen.</figcaption>
+  </figure>
+
+  <h3>Tech stack</h3>
+  <table>
+    <tr><td>Backend</td><td>Python, FastAPI, Uvicorn — one process serves both the API and the UI</td></tr>
+    <tr><td>Retrieval</td><td>scikit-learn TF-IDF + cosine similarity, behind a vector-store interface so it can be swapped for embeddings</td></tr>
+    <tr><td>Reasoning</td><td>Anthropic Claude (claude-opus-4-8) for answers, compliance analysis and graph extraction</td></tr>
+    <tr><td>Ingestion</td><td>pypdf, with sentence-aware overlapping chunking</td></tr>
+    <tr><td>Knowledge graph</td><td>NetworkX for centrality, vis-network for the interactive render</td></tr>
+    <tr><td>Front end</td><td>A single-page app with no build step — plain HTML/CSS/JS, served by FastAPI</td></tr>
+  </table>
+</div>
+
+<!-- 4. DECISIONS + IMPACT -->
+<div class="page break">
+  <p class="eyebrow">Engineering decisions</p>
+  <h2>The choices I'd defend in a review</h2>
+  <p class="lead">A hackathon rewards finishing, but it's the trade-offs that show judgement.
+  Here are the four I made deliberately.</p>
+
+  <div class="decision"><b>Single service instead of a microservice split.</b>
+    <p>FastAPI serves the API and the front end from one process, so the whole thing runs
+    with one command. For a solo build and a live demo, that reliability beats premature
+    separation every time.</p></div>
+  <div class="decision"><b>TF-IDF retrieval instead of a heavyweight vector database.</b>
+    <p>A managed vector store wanted either a GPU or a C++ build chain just to install — a
+    bad bet on an unknown machine. TF-IDF clones and runs anywhere in seconds. Because it's
+    behind a small interface, moving to embeddings later is a one-file change, not a rewrite.</p></div>
+  <div class="decision"><b>It works with no API key.</b>
+    <p>Retrieval and the graph run offline, and answers degrade gracefully to cited extracts.
+    A judge who clones the repo without a key still sees a working product.</p></div>
+  <div class="decision"><b>Citations and a confidence score on every answer.</b>
+    <p>An operations tool that can't show its source is a liability, not an asset. Grounding
+    isn't a feature here — it's the whole point.</p></div>
+
+  <h3 style="margin-top:26px;">Why it's worth it — the business case</h3>
+  <div class="two">
+    <div>
+      <p>The value is boring in the best way: give engineers their time back, stop repeating
+      avoidable failures, and catch compliance gaps while they're still cheap to fix.</p>
+      <p>Heavy industry — steel, oil &amp; gas, pharma, power — is the backbone of Indian
+      manufacturing, and it's exactly the sector drowning in this kind of documentation. A few
+      percentage points of engineer time, across a plant, is crores a year. One avoided
+      unplanned shutdown pays for the system many times over.</p>
+      <p>And it scales sideways with almost no rework: the engine is indifferent to which plant
+      it serves. Change the corpus, not the code.</p>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px;"><div class="k" style="color:var(--blue)">~35%</div>
+        <p>of engineer time spent searching is the pool OpsBrain pulls from.</p></div>
+      <div class="card" style="margin-bottom:12px;"><div class="k" style="color:var(--teal)">1 cmd</div>
+        <p>to run the whole stack — API, UI, retrieval and sample corpus.</p></div>
+      <div class="card"><div class="k" style="color:var(--med)">4</div>
+        <p>industries it ports to with no code change: steel, oil &amp; gas, pharma, power.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. RUN IT + ROADMAP -->
+<div class="page break">
+  <p class="eyebrow">Running it</p>
+  <h2>From clone to running in under a minute</h2>
+  <pre>cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+
+# optional — turns on Claude-synthesised answers
+copy ..\.env.example .env      # add ANTHROPIC_API_KEY
+
+uvicorn app.main:app --reload   # open http://localhost:8000</pre>
+  <p>The sample plant corpus — a Unit-2 crude-transfer loop with pump P-204, its OEM manual,
+  two years of work orders, an OISD standard excerpt, a near-miss report and a P&amp;ID
+  description — is indexed automatically on first boot, so there's something to ask
+  immediately. Drop your own PDFs in through the Documents tab and they're chunked and indexed
+  on upload.</p>
+
+  <p class="eyebrow" style="margin-top:30px;">Where it goes next</p>
+  <h2>Same engine, more inputs</h2>
+  <table>
+    <tr><td>Now</td><td>Cited Q&amp;A, compliance gap detection, knowledge graph and document upload — working end to end.</td></tr>
+    <tr><td>Next</td><td>OCR for scanned P&amp;IDs, so legacy drawings become searchable instead of opaque images.</td></tr>
+    <tr><td>Then</td><td>Connectors into CMMS / SCADA (SAP PM, Maximo) so live work orders and sensor readings flow in.</td></tr>
+    <tr><td>Later</td><td>Predictive maintenance scoring built on the work-order and sensor history the system already holds.</td></tr>
+  </table>
+
+  <p style="margin-top:24px;">The honest summary: the hard, demoable core is done and runs
+  anywhere. What's left is integration and depth — and the architecture was chosen so that
+  adding those doesn't mean starting over.</p>
+
+  <div class="foot">OpsBrain — Industrial Knowledge Intelligence &nbsp;·&nbsp; ET AI Hackathon 2.0, Problem Statement 8
+    &nbsp;·&nbsp; github.com/techwack/opsbrain</div>
+</div>
+
+</body>
+</html>
